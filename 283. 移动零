@@ -1,0 +1,64 @@
+"""283. 移动零
+已解答
+简单
+相关标签
+premium lock icon
+相关企业
+提示
+给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+
+请注意 ，必须在不复制数组的情况下原地对数组进行操作。
+
+ 
+
+示例 1:
+
+输入: nums = [0,1,0,3,12]
+输出: [1,3,12,0,0]
+示例 2:
+
+输入: nums = [0]
+输出: [0]"""
+
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # 第一步：把所有非0元素收集起来（列表推导式，新手也能懂）
+        non_zero_nums = [num for num in nums if num != 0]
+        # 第二步：算需要补多少个0（总长度 - 非0元素的个数）
+        zero_count = len(nums) - len(non_zero_nums)
+        # 第三步：清空原来的列表（关键：保证是修改原列表）
+        nums.clear()
+        # 第四步：把非0元素放回原列表
+        nums.extend(non_zero_nums)
+        # 第五步：补对应个数的0到末尾
+        nums.extend([0] * zero_count)
+"""错误 1：nums.remove(i) 用错了
+i 是循环的索引（比如 0、1、2），不是列表里的元素值（0）！
+比如你想删 0，应该写 nums.remove(0)，而不是 nums.remove(i)（这样会试图删除 “索引对应的数字”，比如 i=0 时删 0，i=1 时删 1，完全错了）。"""
+
+#==============             最佳双指针解法         =========================
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+
+        slow = 0
+
+        for fast in range(len(nums)):
+
+            if nums[fast] != 0:
+                nums[slow], nums[fast] = nums[fast], nums[slow]
+                slow += 1
+        #进阶的解题方法：使用双指针
+        
+
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        #使用双指针进行解题
+        slow = 0
+        for fast in range(len(nums)):
+            if nums[fast] != 0:
+                nums[slow],nums[fast] = nums[fast],nums[slow]
+                slow += 1
+        return nums
